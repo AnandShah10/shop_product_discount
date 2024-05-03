@@ -34,5 +34,18 @@
 
             </xpath>
         </template>
+        <template id="sale_report_inherit_website" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']//thead//tr//th[@name='th_taxes']"
+                   position="after">
+                <th name="discount">Discount</th>
+            </xpath>
+            <xpath expr="//table[@class='table table-sm o_main_table table-borderless mt-4']//tbody[@class='sale_tbody']//tr//td[@name='td_taxes']"
+                   position="after">
+                <td name="the_discount">
+                    <span t-field="line.active_discount"/>
+                </td>
+
+            </xpath>
+        </template>
     </data>
 </odoo>
