@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="totals_inherit" inherit_id="sale.document_tax_totals">
+            <xpath expr="//tr[@class='border-black o_total']" position="replace">
+                <t t-if="tax_totals['discount']">
+                    <tr t-if="'formatted_discount' in tax_totals and tax_totals['discount'] != 0">
+                        <td>Discount</td>
+                        <td class="text-end">
+                            <span t-out="tax_totals['formatted_discount']">0</span>
+                        </td>
+                    </tr>
+                    <!--Total amount with all taxes-->
+                    <tr class="border-black o_total">
+                        <td>
+                            <strong>Total</strong>
+                        </td>
+                        <td class="text-end">
+                            <span t-out="tax_totals['formatted_amount_total']">31.05</span>
+                        </td>
+                    </tr>
+                </t>
+
+                <t t-else="">
+                    <tr class="border-black o_total">
+                        <td>
+                            <strong>Total</strong>
+                        </td>
+                        <td class="text-end">
+                            <span t-out="tax_totals['formatted_amount_total']">31.05</span>
+                        </td>
+                    </tr>
+                </t>
+
+            </xpath>
+        </template>
+    </data>
+</odoo>

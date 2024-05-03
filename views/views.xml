@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_product_inherit_form" model="ir.ui.view">
+        <field name="name">product.product.inherit.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='uom_po_id']" position="after">
+                <field name="discount" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_variants_sale_form" model="ir.ui.view">
+        <field name="name">view.product.variants.sale.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//page[@name='order_lines']//tree//field[@name='tax_id']" position="after">
+                <field name="active_discount"/>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="shop_total_inherit" inherit_id="website_sale.total">
+        <xpath expr="//tr[@id='order_total_taxes']" position="after">
+            <t t-set="discount_total" t-value="0.0"/>
+            <t t-foreach="website_sale_order.website_order_line" t-as="line"
+               t-if="line.product_id.discount">
+                <t t-set="line_discount" t-value="(line.product_uom_qty * (10.0))"/>
+                <t t-set="discount_total" t-value="discount_total + line_discount"/>
+            </t>
+            <tr id="order_discount">
+                <td colspan="2" class="text-muted border-0 ps-0 pt-0 pb-3">Discount</td>
+                <td class="text-end border-0 pe-0 pt-0 pb-3">
+                    -<span t-esc="discount_total"
+                          class="monetary_field"
+                          style="white-space: nowrap;"
+                          t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+</odoo>
