@@ -9,7 +9,7 @@
     'description': """
 Shop discount  for specific product
 """,
-    'category': 'Website/Shop',
+    'category': 'Custom/Website_sale',
     'website': 'https://www.odoo.com/app/invoicing',
     'depends': ['mail', 'sale', 'base', 'product', 'website', 'website_sale'],
     'data': [
